@@ -29,7 +29,7 @@ Sahar Bavi :
 
 - ticket view
 
-  Motahareh Molaei:
+Motahareh Molaei:
 
-  - person class
-  - ticket class
+- person class
+- ticket class
