@@ -107,14 +107,14 @@ Entry(window, textvariable=seat_no, width=7).place(x=100, y=280)
 seat_al = StringVar(value="A")
 ttk.Combobox(window, textvariable=seat_al, width=4).place(x=170, y=280)
 
-# search_ticket
+# search_ticket:
 
-#search_city
-Label(window,text="city:",background="light blue").place(x=700, y=360)
+# search_city
+Label(window, text="city:", background="light blue").place(x=700, y=360)
 search_city = StringVar(value="Tehran")
 ttk.Combobox(window, textvariable=search_city, width=17).place(x=730, y=360)
 
-#search_date
+# search_date
 Label(window, text="date_time:", background="light blue").place(x=300, y=360)
 # day
 search_day = StringVar(value="sat")
@@ -128,7 +128,6 @@ Label(window, text=":", background="light blue").place(x=450, y=360)
 # minute
 search_time_m = StringVar()
 Entry(window, textvariable=search_time_m, width=3).place(x=460, y=360)
-
 
 ## Table:
 table = ttk.Treeview(window, columns=[1, 2, 3, 4, 5, 6, 7, 8, 9], show="headings", height=15)
