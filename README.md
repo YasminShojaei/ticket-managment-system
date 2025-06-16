@@ -9,7 +9,6 @@ Maliheh Andalib (https://github.com/maliheandalib)
 
 Sahar Bavi (https://github.com/saharbavi)
 
-Motahareh Molaei ()
 
 وظایف هر فرد در پروژه (بازه زمانی تا سه شنبه -آپدیت خواهد شد )
 
