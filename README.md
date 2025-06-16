@@ -11,7 +11,7 @@ Sahar Bavi (https://github.com/saharbavi)
 
 Motahareh Molaei ()
 
-وظایف هر فرد در پروژه (بازه زمانی تا دوشنبه -آپدیت خواهد شد )
+وظایف هر فرد در پروژه (بازه زمانی تا سه شنبه -آپدیت خواهد شد )
 
 Yamin Shojaei : 
 
@@ -19,7 +19,13 @@ Yamin Shojaei :
   
 - validation
   
-- buttons of the views
+- Person class
+  
+- ticket class
+
+- personDa
+
+- ticketDa
 
 Malihe Andalib : 
 
@@ -29,7 +35,4 @@ Sahar Bavi :
 
 - ticket view
 
-Motahareh Molaei:
-
-- person class
-- ticket class
+- def buttons
