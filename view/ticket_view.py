@@ -35,7 +35,8 @@ def reset_ticket():
 def search_ticket():
     pass
 
-
+def table_select():
+    pass
 ## Entries:
 
 # id
@@ -144,15 +145,15 @@ table.heading(8, text="Price")
 table.heading(9, text="Seat No")
 
 # table_column
-table.column(1, width=60)
-table.column(2, width=100)
-table.column(3, width=100)
-table.column(4, width=100)
-table.column(5, width=100)
-table.column(6, width=100)
-table.column(7, width=100)
-table.column(8, width=100)
-table.column(9, width=100)
+table.column(1, width=60, anchor="center")
+table.column(2, width=100, anchor="center")
+table.column(3, width=100, anchor="center")
+table.column(4, width=100, anchor="center")
+table.column(5, width=100, anchor="center")
+table.column(6, width=100, anchor="center")
+table.column(7, width=100, anchor="center")
+table.column(8, width=100, anchor="center")
+table.column(9, width=100, anchor="center")
 
 # table.bind("<<TreeviewSelect>>", table_select)
 
