@@ -1,8 +1,8 @@
 from tkinter import *
 import tkinter.ttk as ttk
-
-# import tkinter.messagebox as msg
-
+from model.entity import ticket
+from model.tools import combo_values
+from model.tools.combo_values import city_values, airline_values
 
 window = Tk()
 window.title("Ticket Info")
@@ -35,8 +35,44 @@ def reset_ticket():
 def search_ticket():
     pass
 
-def table_select():
-    pass
+
+def table_select(x):
+    selected = table.item(table.focus())["values"]
+    if selected:
+        selected_ticket = ticket(*selected)
+        if selected_ticket:
+            t_id.set(selected_ticket.id)
+            ticket_code.set(selected_ticket.code)
+            source.set(selected_ticket.source)
+            destination.set(selected_ticket.destination)
+            airline.set(selected_ticket.airline)
+            # start_time : "YYYY-MM-DD HH:MM"
+            if " " in selected_ticket.start_time:
+                start_d, start_t = selected_ticket.start_time.split(" ")
+                start_date.set(start_d)
+                start_h, start_m = start_t.split(":")
+                start_time_h.set(start_h)
+                start_time_m.set(start_m)
+            else:
+                start_date.set(selected_ticket.start_time)
+                start_time_h.set("")
+                start_time_m.set("")
+
+            # end_time : "YYYY-MM-DD HH:MM"
+            if " " in selected_ticket.end_time:
+                end_d, end_t = selected_ticket.end_time.split(" ")
+                end_date.set(end_d)
+                end_h, end_m = end_t.split(":")
+                end_time_h.set(end_h)
+                end_time_m.set(end_m)
+            else:
+                end_date.set(selected_ticket.end_time)
+                end_time_h.set("")
+                end_time_m.set("")
+            price.set(selected_ticket.price)
+            seat_no.set(selected_ticket.seat_number)
+
+
 ## Entries:
 
 # id
@@ -52,23 +88,23 @@ Entry(window, textvariable=ticket_code).place(x=100, y=60)
 # source
 Label(window, text="source:", background="light blue").place(x=20, y=90)
 source = StringVar(value="Tehran")
-ttk.Combobox(window, textvariable=source, width=17).place(x=100, y=90)
+ttk.Combobox(window, textvariable=source, values=city_values, width=17).place(x=100, y=90)
 
 # destination
 Label(window, text="destination:", background="light blue").place(x=20, y=120)
 destination = StringVar(value="Tabriz")
-ttk.Combobox(window, textvariable=destination, width=17).place(x=100, y=120)
+ttk.Combobox(window, textvariable=destination, values=city_values, width=17).place(x=100, y=120)
 
 # airline
 Label(window, text="airline:", background="light blue").place(x=20, y=150)
 airline = StringVar(value="Iran Air")
-ttk.Combobox(window, textvariable=airline, width=17).place(x=100, y=150)
+ttk.Combobox(window, textvariable=airline, values=airline_values, width=17).place(x=100, y=150)
 
 # start_date_time
 Label(window, text="start_date_time:", background="light blue").place(x=20, y=180)
 # day
-start_date = StringVar(value="sat")
-ttk.Combobox(window, textvariable=start_date, width=4).place(x=110, y=180)
+start_date = StringVar(value="")
+Entry(window, textvariable=start_date, width=8).place(x=110, y=180)
 # start_time
 # hour
 start_time_h = StringVar()
@@ -82,8 +118,8 @@ Entry(window, textvariable=start_time_m, width=3).place(x=200, y=180)
 # end_date_time
 Label(window, text="end_date_time:", background="light blue").place(x=20, y=210)
 # day
-end_date = StringVar(value="sat")
-ttk.Combobox(window, textvariable=end_date, width=4).place(x=110, y=210)
+end_date = StringVar(value="")
+Entry(window, textvariable=end_date, width=8).place(x=110, y=210)
 # end_time
 # hour
 end_time_h = StringVar()
@@ -104,31 +140,21 @@ Label(window, text="تومان", background="light blue").place(x=190, y=240)
 Label(window, text="seat no.:", background="light blue").place(x=20, y=280)
 seat_no = IntVar(value=1)
 Entry(window, textvariable=seat_no, width=7).place(x=100, y=280)
-# A-F
-seat_al = StringVar(value="A")
-ttk.Combobox(window, textvariable=seat_al, width=4).place(x=170, y=280)
+# # A-F
+# seat_al = StringVar(value="A")
+# ttk.Combobox(window, textvariable=seat_al, width=4).place(x=170, y=280)
 
 # search_ticket:
 
 # search_city
 Label(window, text="city:", background="light blue").place(x=700, y=360)
 search_city = StringVar(value="Tehran")
-ttk.Combobox(window, textvariable=search_city, width=17).place(x=730, y=360)
+ttk.Combobox(window, textvariable=search_city, values=city_values, width=17).place(x=730, y=360)
 
 # search_date
 Label(window, text="date_time:", background="light blue").place(x=300, y=360)
-# day
-search_day = StringVar(value="sat")
-ttk.Combobox(window, textvariable=search_day, width=4).place(x=370, y=360)
-# end_time
-# hour
-search_time_h = StringVar()
-Entry(window, textvariable=search_time_h, width=3).place(x=425, y=360)
-
-Label(window, text=":", background="light blue").place(x=450, y=360)
-# minute
-search_time_m = StringVar()
-Entry(window, textvariable=search_time_m, width=3).place(x=460, y=360)
+search_date = StringVar(value="--")
+ttk.Combobox(window, textvariable=search_date, width=17).place(x=370, y=360)
 
 ## Table:
 table = ttk.Treeview(window, columns=[1, 2, 3, 4, 5, 6, 7, 8, 9], show="headings", height=15)
@@ -155,7 +181,7 @@ table.column(7, width=100, anchor="center")
 table.column(8, width=100, anchor="center")
 table.column(9, width=100, anchor="center")
 
-# table.bind("<<TreeviewSelect>>", table_select)
+table.bind("<<TreeviewSelect>>", table_select)
 
 table.place(x=265, y=20)
 
