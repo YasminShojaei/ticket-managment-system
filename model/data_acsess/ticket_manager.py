@@ -25,7 +25,7 @@ class TicketManager:
     def edit(self, ticket):
         data = self.read_all()
         for i, t in enumerate(data):
-            if t.code == ticket.code:
+            if t.ticket_code == ticket.ticket_code:
                 data[i] = ticket
                 self.write_all(data)
                 return

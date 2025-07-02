@@ -88,12 +88,12 @@ def edit_ticket():
 
 def delete_ticket():
     try:
-        code = code.get()
-        if not code:
+        ticket_code = ticket_code.get()
+        if not ticket_code:
             msg.showerror("Error", "Please enter ticket code")
             return
 
-        result = ticket_controller.remove(code)
+        result = ticket_controller.remove(ticket_code)
         msg.showinfo("Result", result)
         load_table_data()
 

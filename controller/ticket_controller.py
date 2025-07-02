@@ -1,6 +1,5 @@
 
 from model.business_logic.ticket_bl import TicketBl
-from model.data_acsess.ticket_manager import *
 
 class TicketController:
     def __init__(self):
@@ -29,9 +28,9 @@ class TicketController:
         except Exception as e:
             return f"An error occurred: {e}"
 
-    def remove(self, code):
+    def remove(self, ticket_code):
         try:
-            self.ticket_bl.remove(code)
+            self.ticket_bl.remove(ticket_code)
             return "Ticket removed successfully"
         except Exception as e:
             return f"An error occurred: {e}"
