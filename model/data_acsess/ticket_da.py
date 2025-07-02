@@ -5,6 +5,8 @@ class TicketDa:
         pass
     def remove(self, ticket):
         pass
+    def reset(self,ticket):
+        pass
     def find_all(self):
         pass
     def find_by_id(self, id_):

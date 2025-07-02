@@ -1,9 +1,8 @@
 from tkinter import *
 import tkinter.ttk as ttk
 from model.entity import ticket
-from model.data_acsess.ticket_data_lists import city_values, airline_values
+from model.tools.ticket_data_lists import city_values, airline_values
 
-# ticket_list = read_from_file()
 
 window = Tk()
 window.title("Ticket Info")
@@ -11,83 +10,15 @@ window.geometry("1160x500")
 window.config(cursor="hand2", background="light blue")
 
 
-# # load data from file todo:do it after ticket_manager & validation
-def load_data(ticket_list):pass
-#     ticket_list = read_from_file()
-#     for row in table.get_children():
-#         table.delete(row)
-#
-#     for ticket in ticket_list:
-#         table.insert("", END, values=ticket.to_tuple())
-#
-#
+# # load data from file
+
 # ## btn_function:
 # # save_btn
 def save_ticket():pass
-#     ticket = Ticket(t_id.get(),
-#                     ticket_code.get(),
-#                     source.get(),
-#                     destination.get(),
-#                     airline.get(),
-#                     start_date.get(),
-#                     start_time_h.get(),
-#                     start_time_m.get(),
-#                     end_date.get(),
-#                     end_time_h.get(),
-#                     end_time_m.get()
-#                     )
-#     errors = ticket.validate()
-#     if errors:
-#         msg.showerror("Error", "\n".join(errors))
-#
-#     else:
-#         msg.showinfo("Saved", "Ticket saved")
-#         ticket_list.append(ticket)
-#         write_to_file(ticket_list)
-#         reset_form()
-#
-#
-# # edit_btn
+
 def edit_ticket():pass
-#     if not table.selection():
-#         msg.showwarning("Warning", "Please select a ticket to edit.")
-#         return
-#
-#     new_ticket = Ticket(t_id.get(),
-#                         ticket_code.get(),
-#                         source.get(),
-#                         destination.get(),
-#                         airline.get(),
-#                         start_date.get(),
-#                         start_time_h.get(),
-#                         start_time_m.get(),
-#                         end_date.get(),
-#                         end_time_h.get(),
-#                         end_time_m.get()
-#                         )
-#
-#     errors = new_ticket.validate()
-#     if errors:
-#         msg.showerror("Error", "\n".join(errors))
-#         return
-#
-#     for i, ticket in enumerate(ticket_list):
-#         if ticket.t_id == new_ticket.t_id:
-#             ticket_list[i] = new_ticket
-#             break
-#     else:
-#         msg.showerror("Error", "Ticket not found.")
-#         return
-#
-#     write_to_file(ticket_list)
-#     msg.showinfo("Success", "Ticket updated.")
-#     load_data(ticket_list)
-#     reset_form()
-#
-#
-# delete_btn
-def delete_ticket():
-    pass
+
+def delete_ticket():pass
 
 
 # # Clear_btn
