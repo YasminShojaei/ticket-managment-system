@@ -1,26 +1,39 @@
-import os
 import pickle
-
+import os
 
 file_name = "ticket.dat"
 
-def check_file():
-    return os.path.exists(file_name)
+class TicketManager:
+    def __init__(self):
+        if not os.path.exists(file_name):
+            with open(file_name, "wb") as f:
+                pickle.dump([], f)
 
+    def read_all(self):
+        with open(file_name, "rb") as f:
+            return pickle.load(f)
 
-def read_from_file():
-    if check_file():
-        file = open(file_name, "rb")
-        data_list = pickle.load(file)
-        file.close()
-        return data_list
-    else:
-        file = open(file_name, "wb")
-        file.close()
-        return []
+    def write_all(self, data_list):
+        with open(file_name, "wb") as f:
+            pickle.dump(data_list, f)
 
-def write_to_file(data_list):
-    file = open(file_name, "wb")
-    pickle.dump(data_list, file)
-    file.close()
+    def save(self, ticket):
+        data = self.read_all()
+        data.append(ticket)
+        self.write_all(data)
 
+    def edit(self, ticket):
+        data = self.read_all()
+        for i, t in enumerate(data):
+            if t.code == ticket.code:
+                data[i] = ticket
+                self.write_all(data)
+                return
+        raise Exception("Ticket not found")
+
+    def remove(self, code):
+        data = self.read_all()
+        new_data = [t for t in data if t.code != code]
+        if len(data) == len(new_data):
+            raise Exception("Ticket not found")
+        self.write_all(new_data)

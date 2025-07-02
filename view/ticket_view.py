@@ -1,10 +1,13 @@
 from tkinter import *
 import tkinter.ttk as ttk
+import tkinter.messagebox as msg
 from model.data_acsess.ticket_manager import *
-from model.entity import ticket
+from model.entity.ticket import Ticket
 from model.tools.ticket_data_lists import city_values, airline_values
+from controller.ticket_controller import TicketController
 
-ticket_list = read_from_file()
+ticket_controller = TicketController()
+
 
 window = Tk()
 window.title("Ticket Info")
@@ -13,21 +16,88 @@ window.config(cursor="hand2", background="light blue")
 
 
 # # load data from file
-def load_data(ticket_list):
-    for row in table.get_children():
-        table.delete(row)
+def load_table_data():
+    # جدول رو پاک کن
+    for item in table.get_children():
+        table.delete(item)
 
+    # لیست جدید بگیر
+    ticket_list = ticket_controller.get_all()
+
+    # اضافه کن به جدول
     for ticket in ticket_list:
-        table.insert("",END, values=ticket.to_tuple())
+        table.insert("", "end", values=(
+            ticket.t_id,
+            ticket.ticket_code,
+            ticket.source,
+            ticket.destination,
+            ticket.airline,
+            ticket.start_date,
+            ticket.end_date,
+            ticket.price,
+            ticket.seat_no
+        ))
+
+
 
 
 # ## btn_function:
 # # save_btn
-def save_ticket():pass
+def save_ticket():
+    try:
+        ticket = Ticket(
+            t_id=t_id.get(),
+            ticket_code=ticket_code.get(),
+            source=source.get(),
+            destination=destination.get(),
+            airline=airline.get(),
+            start_date=start_date.get(),
+            end_date=end_date.get(),
+            price=price.get(),
+            seat_no=seat_no.get()
+        )
 
-def edit_ticket():pass
+        result = ticket_controller.save(ticket)
+        msg.showinfo("Result", result)
+        load_table_data()  # جدول رو به‌روز کن
 
-def delete_ticket():pass
+    except Exception as e:
+        msg.showerror("Error", str(e))
+
+
+def edit_ticket():
+    try:
+        ticket = Ticket(
+            t_id=t_id.get(),
+            ticket_code=ticket_code.get(),
+            source=source.get(),
+            destination=destination.get(),
+            airline=airline.get(),
+            start_date=start_date.get(),
+            end_date=end_date.get(),
+            price=price.get(),
+            seat_no=seat_no.get()
+        )
+
+        result = ticket_controller.edit(ticket)
+        msg.showinfo("Result", result)
+
+    except Exception as e:
+        msg.showerror("Error", str(e))
+
+
+def delete_ticket():
+    try:
+        code = code.get()
+        if not code:
+            msg.showerror("Error", "Please enter ticket code")
+            return
+
+        result = ticket_controller.remove(code)
+        msg.showinfo("Result", result)
+
+    except Exception as e:
+        msg.showerror("Error", str(e))
 
 
 # # Clear_btn
@@ -43,6 +113,8 @@ def reset_ticket():
     end_date.set("")
     end_time_h.set("")
     end_time_m.set("")
+
+
 #
 #
 # search_btn
@@ -50,43 +122,24 @@ def search_ticket():
     pass
 
 
-def table_select(x):
-    selected = table.item(table.focus())["values"]
-    if selected:
-        selected_ticket = ticket(*selected)
-        if selected_ticket:
-            t_id.set(selected_ticket.id)
-            ticket_code.set(selected_ticket.code)
-            source.set(selected_ticket.source)
-            destination.set(selected_ticket.destination)
-            airline.set(selected_ticket.airline)
-            # start_time : "YYYY-MM-DD HH:MM"
-            if " " in selected_ticket.start_time:
-                start_d, start_t = selected_ticket.start_time.split(" ")
-                start_date.set(start_d)
-                start_h, start_m = start_t.split(":")
-                start_time_h.set(start_h)
-                start_time_m.set(start_m)
-            else:
-                start_date.set(selected_ticket.start_time)
-                start_time_h.set("")
-                start_time_m.set("")
+def table_select(ticket):
+    selected_item = table.focus()  # سطر انتخاب‌شده در جدول
+    if not selected_item:
+        return
 
-            # end_time : "YYYY-MM-DD HH:MM"
-            if " " in selected_ticket.end_time:
-                end_d, end_t = selected_ticket.end_time.split(" ")
-                end_date.set(end_d)
-                end_h, end_m = end_t.split(":")
-                end_time_h.set(end_h)
-                end_time_m.set(end_m)
-            else:
-                end_date.set(selected_ticket.end_time)
-                end_time_h.set("")
-                end_time_m.set("")
-            price.set(selected_ticket.price)
-            seat_no.set(selected_ticket.seat_number)
+    values = table.item(selected_item, "values")
+    if not values:
+        return
 
-
+    t_id.set(ticket.t_id)
+    ticket_code.set(ticket.ticket_code)
+    source.set(ticket.source)
+    destination.set(ticket.destination)
+    airline.set(ticket.airline)
+    start_date.set(ticket.start_date)
+    end_time_h.set(ticket.end_date)
+    price.set(ticket.price)
+    seat_no.set(ticket.seat_no)
 ## Entries:
 
 # id
