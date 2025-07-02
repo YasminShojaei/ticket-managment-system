@@ -31,9 +31,14 @@ class TicketManager:
                 return
         raise Exception("Ticket not found")
 
-    def remove(self, code):
+    def remove(self, t_id):
         data = self.read_all()
-        new_data = [t for t in data if t.code != code]
+        t_id = str(t_id).strip()
+        print("Current ticket IDs:", [str(t.t_id).strip() for t in data])
+        print(f"Remove requested for t_id: '{t_id}'")
+
+        new_data = [t for t in data if str(t.t_id).strip() != t_id]
         if len(data) == len(new_data):
             raise Exception("Ticket not found")
+
         self.write_all(new_data)

@@ -7,7 +7,6 @@ from controller.ticket_controller import TicketController
 
 ticket_controller = TicketController()
 
-
 window = Tk()
 window.title("Ticket Info")
 window.geometry("1160x500")
@@ -36,8 +35,6 @@ def load_table_data():
             ticket.price,
             ticket.seat_no
         ))
-
-
 
 
 # ## btn_function:
@@ -88,14 +85,29 @@ def edit_ticket():
 
 def delete_ticket():
     try:
-        ticket_code = ticket_code.get()
-        if not ticket_code:
-            msg.showerror("Error", "Please enter ticket code")
+        selected_item = table.focus()
+        if not selected_item:
+            msg.showerror("Error", "Please select a ticket from the table")
             return
 
-        result = ticket_controller.remove(ticket_code)
+        values = table.item(selected_item, "values")
+        if not values or len(values) == 0:
+            msg.showerror("Error", "Invalid selection")
+            return
+
+        t_id = values[0]  # ستون اول جدول شناسه تیکت هست
+
+        confirm = msg.askyesno("Confirm Delete", f"Are you sure you want to delete ticket with ID '{t_id}'?")
+        if not confirm:
+            return
+
+        result = ticket_controller.remove(t_id)
         msg.showinfo("Result", result)
         load_table_data()
+        reset_ticket()
+
+    except Exception as e:
+        msg.showerror("Error", str(e))
 
     except Exception as e:
         msg.showerror("Error", str(e))
@@ -103,7 +115,7 @@ def delete_ticket():
 
 # # Clear_btn
 def reset_ticket():
-    # t_id.set(len(ticket_list) + 1)
+    t_id.set(ticket_controller.get_ticket_count() + 1)
     ticket_code.set("")
     source.set("Tehran")
     destination.set("Tabriz")
@@ -137,6 +149,8 @@ def table_select(event=None):
             end_time_h.set(selected_ticket.end_date)
             price.set(selected_ticket.price)
             seat_no.set(selected_ticket.seat_no)
+
+
 ## Entries:
 
 # id

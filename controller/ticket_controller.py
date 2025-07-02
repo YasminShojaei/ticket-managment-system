@@ -8,6 +8,9 @@ class TicketController:
     def get_all(self):
         return self.ticket_bl.get_all()
 
+    def get_ticket_count(self):
+        return len(self.ticket_bl.get_all())
+
     def save(self, ticket):
         try:
             ticket.validate()
@@ -28,9 +31,9 @@ class TicketController:
         except Exception as e:
             return f"An error occurred: {e}"
 
-    def remove(self, ticket_code):
+    def remove(self, t_id):
         try:
-            self.ticket_bl.remove(ticket_code)
+            self.ticket_bl.remove(t_id)
             return "Ticket removed successfully"
         except Exception as e:
             return f"An error occurred: {e}"

@@ -13,7 +13,7 @@ class TicketBl:
     def edit(self, ticket):
         self.manager.edit(ticket)
 
-    def remove(self, ticket_code):
-        self.manager.remove(ticket_code)
+    def remove(self, t_id):
+        self.manager.remove(t_id)
 
 
