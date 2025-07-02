@@ -1,7 +1,6 @@
 from tkinter import *
 import tkinter.ttk as ttk
 import tkinter.messagebox as msg
-from model.data_acsess.ticket_manager import *
 from model.entity.ticket import Ticket
 from model.tools.ticket_data_lists import city_values, airline_values
 from controller.ticket_controller import TicketController
@@ -81,6 +80,7 @@ def edit_ticket():
 
         result = ticket_controller.edit(ticket)
         msg.showinfo("Result", result)
+        load_table_data()
 
     except Exception as e:
         msg.showerror("Error", str(e))
@@ -95,6 +95,7 @@ def delete_ticket():
 
         result = ticket_controller.remove(code)
         msg.showinfo("Result", result)
+        load_table_data()
 
     except Exception as e:
         msg.showerror("Error", str(e))
@@ -122,24 +123,20 @@ def search_ticket():
     pass
 
 
-def table_select(ticket):
-    selected_item = table.focus()  # سطر انتخاب‌شده در جدول
-    if not selected_item:
-        return
-
-    values = table.item(selected_item, "values")
-    if not values:
-        return
-
-    t_id.set(ticket.t_id)
-    ticket_code.set(ticket.ticket_code)
-    source.set(ticket.source)
-    destination.set(ticket.destination)
-    airline.set(ticket.airline)
-    start_date.set(ticket.start_date)
-    end_time_h.set(ticket.end_date)
-    price.set(ticket.price)
-    seat_no.set(ticket.seat_no)
+def table_select(event=None):
+    selected = table.item(table.focus())["values"]
+    if selected:
+        selected_ticket = Ticket(*selected)
+        if selected_ticket:
+            t_id.set(selected_ticket.t_id)
+            ticket_code.set(selected_ticket.ticket_code)
+            source.set(selected_ticket.source)
+            destination.set(selected_ticket.destination)
+            airline.set(selected_ticket.airline)
+            start_date.set(selected_ticket.start_date)
+            end_time_h.set(selected_ticket.end_date)
+            price.set(selected_ticket.price)
+            seat_no.set(selected_ticket.seat_no)
 ## Entries:
 
 # id
