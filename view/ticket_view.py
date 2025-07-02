@@ -1,8 +1,10 @@
 from tkinter import *
 import tkinter.ttk as ttk
+from model.data_acsess.ticket_manager import *
 from model.entity import ticket
 from model.tools.ticket_data_lists import city_values, airline_values
 
+ticket_list = read_from_file()
 
 window = Tk()
 window.title("Ticket Info")
@@ -11,6 +13,13 @@ window.config(cursor="hand2", background="light blue")
 
 
 # # load data from file
+def load_data(ticket_list):
+    for row in table.get_children():
+        table.delete(row)
+
+    for ticket in ticket_list:
+        table.insert("",END, values=ticket.to_tuple())
+
 
 # ## btn_function:
 # # save_btn
