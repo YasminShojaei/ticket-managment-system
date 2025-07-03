@@ -1,4 +1,6 @@
 from model.tools.validation import *
+
+
 # from view.ticket_view import ticket_code, source
 
 
@@ -14,13 +16,14 @@ class Ticket:
         self.price = price
         self.seat_no = seat_no
 
-     def __prep__(self):
-         return (self.t_id, self.ticket_code, self.source, self.destination, self.airline, self.start_date, self.end_date, self.price)
+    def __repr__(self):
+        return (self.t_id, self.ticket_code, self.source, self.destination, self.airline, self.start_date,
+                self.end_date, self.price)
 
     def to_tuple(self):
         return (
-        self.t_id, self.ticket_code, self.source, self.destination, self.airline, self.start_date, self.end_date,
-        self.price, self.seat_no)
+            self.t_id, self.ticket_code, self.source, self.destination, self.airline, self.start_date, self.end_date,
+            self.price, self.seat_no)
 
     # def validate(self):
     #     validator = Validation()

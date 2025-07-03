@@ -1,4 +1,4 @@
-# from view.ticket_view import TicketView
+from view.ticket_view import TicketView
 
 # ui = PersonView()
-# ui = TicketView()
+ui = TicketView()
