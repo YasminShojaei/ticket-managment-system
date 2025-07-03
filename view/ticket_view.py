@@ -92,6 +92,8 @@ class TicketView:
         self.end_date.set("")
         self.end_time_h.set("")
         self.end_time_m.set("")
+        self.price.set(0)
+        self.seat_no.set(1)
 
     # search_btn
     def search_ticket(self):

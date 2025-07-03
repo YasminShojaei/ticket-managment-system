@@ -17,7 +17,7 @@ def end_date_validator(value):
     pass
 def price_validator(value):
     pass
-def seat_no(value):
+def seat_no_validator(value):
     pass
 
 class Validation:
