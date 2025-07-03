@@ -6,28 +6,6 @@ from view import *
 ticket_controller = TicketController()
 class TicketView:
 
-    def load_table_data():
-        # جدول رو پاک کن
-        for item in table.get_children():
-            table.delete(item)
-
-        # لیست جدید بگیر
-        ticket_list = ticket_controller.get_all()
-
-        # اضافه کن به جدول
-        for ticket in ticket_list:
-            table.insert("", "end", values=(
-                ticket.t_id,
-                ticket.ticket_code,
-                ticket.source,
-                ticket.destination,
-                ticket.airline,
-                ticket.start_date,
-                ticket.end_date,
-                ticket.price,
-                ticket.seat_no
-            ))
-
     # ## btn_function:
     # # save_btn
     def save_ticket(self):
@@ -128,6 +106,28 @@ class TicketView:
         window.title("Ticket Info")
         window.geometry("1160x500")
         window.config(cursor="hand2", background="light blue")
+
+        def load_table_data():
+            # جدول رو پاک کن
+            for item in table.get_children():
+                table.delete(item)
+
+            # لیست جدید بگیر
+            ticket_list = ticket_controller.get_all()
+
+            # اضافه کن به جدول
+            for ticket in ticket_list:
+                table.insert("", "end", values=(
+                    ticket.t_id,
+                    ticket.ticket_code,
+                    ticket.source,
+                    ticket.destination,
+                    ticket.airline,
+                    ticket.start_date,
+                    ticket.end_date,
+                    ticket.price,
+                    ticket.seat_no
+                ))
 
         def table_select(event=None):
             selected = table.item(table.focus())["values"]
