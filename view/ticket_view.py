@@ -76,13 +76,13 @@ class TicketView:
         except Exception as e:
             msg.showerror("Error", str(e))
 
-        except Exception as e:
-            msg.showerror("Error", str(e))
+        # except Exception as e:
+        #     msg.showerror("Error", str(e))
 
     # # Clear_btn
     def reset_ticket(self):
         self.t_id.set(ticket_controller.get_ticket_count() + 1)
-        self.ticket_code.set("")
+        self.ticket_code.set(111)
         self.source.set("Tehran")
         self.destination.set("Tabriz")
         self.airline.set("Iran Air")
@@ -152,7 +152,7 @@ class TicketView:
 
         # ticket_code
         Label(window, text="ticket code:", background="light blue").place(x=20, y=60)
-        self.ticket_code = StringVar()
+        self.ticket_code = IntVar()
         Entry(window, textvariable=self.ticket_code).place(x=100, y=60)
 
         # source
