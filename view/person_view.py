@@ -65,15 +65,15 @@ Entry(window, textvariable=password).place(x=100, y=220)
 Label(window, text="Is Locked").place(x=10, y=260)
 is_locked = BooleanVar()
 
-Radiobutton(window, text="True", variable=is_locked, value="Active").place(x=95, y=260)
-Radiobutton(window, text="False", variable=is_locked, value="Active").place(x=150, y=260)
+Radiobutton(window, text="True", variable=is_locked, value="True").place(x=95, y=260)
+Radiobutton(window, text="False", variable=is_locked, value="False").place(x=150, y=260)
 
 
 Label(window, text="Role").place(x=10, y=300)
 role = StringVar()
 
-Radiobutton(window, text="Customer", variable=role, value="Active").place(x=95, y=300)
-Radiobutton(window, text="Admin", variable=role, value="Active").place(x=150, y=300)
+Radiobutton(window, text="Customer", variable=role, value="Customer").place(x=95, y=300)
+Radiobutton(window, text="Admin", variable=role, value="Admin").place(x=150, y=300)
 
 table = ttk.Treeview(window, columns=[1, 2, 3, 4, 5, 6, 7], show="headings")
 
