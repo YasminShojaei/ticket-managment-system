@@ -11,7 +11,7 @@ def reset_form():
     password.set("")
 
 def save_btn_click():
-    person =(id.get(), name.get() + "" + family.get(), birth_date.get(), user_name.get(), password.get())
+    person =(id.get(), name.get() + "" + family.get(), birth_date.get(), user_name.get(), password.get(), is_locked.get(), role.get())
     table.insert("", END, values=person)
     msg.showinfo("Saved", "person saved")
     reset_form()
@@ -25,6 +25,15 @@ def edit_btn_click():
 
 def cancel_btn_click():
     print("cancel")
+
+def table_select(x):
+    selected_user = table.item(table.focus())["values"]
+    id.set(selected_user[0])
+    name.set(selected_user[1])
+    family.set(selected_user[1])
+    birth_date.set(selected_user[2])
+    user_name.set(selected_user[3])
+    password.set(selected_user[4])
 
 window = Tk()
 window.title("User View")
@@ -56,7 +65,7 @@ password = StringVar()
 Entry(window, textvariable=password).place(x=100, y=220)
 
 Label(window, text="Is Locked").place(x=10, y=260)
-is_locked = BooleanVar(value=True)
+is_locked = BooleanVar()
 
 Radiobutton(window, text="True", variable=is_locked, value="Active").place(x=95, y=260)
 Radiobutton(window, text="False", variable=is_locked, value="Active").place(x=150, y=260)
@@ -85,6 +94,8 @@ table.column(4, width=110)
 table.column(5, width=110)
 table.column(6, width=70)
 table.column(7, width=110)
+
+table.bind("<<TreeviewSelect>>", table_select)
 
 table.place(x=300, y=20 ,height=410)
 
