@@ -11,6 +11,8 @@ class TicketView:
     # ## btn_function:
     # # save_btn
     def save_ticket(self):
+
+
         try:
             ticket = Ticket(
                 t_id=self.t_id.get(),
@@ -33,7 +35,23 @@ class TicketView:
             else:
                 msg.showinfo("Info", "somthing went wrong!!!")
 
+
+
             result = ticket_controller.save(ticket)
+            for ticket in result:
+                self.table.insert("", "end", values=(
+                    ticket.t_id,
+                    ticket.ticket_code,
+                    ticket.source,
+                    ticket.destination,
+                    ticket.airline,
+                    ticket.start_date,
+                    ticket.end_date,
+                    ticket.price,
+                    ticket.seat_no,
+                    ticket.sold
+                ),tags=tag)
+
             msg.showinfo("Result", result)
             self.load_table_data()
 
@@ -122,19 +140,21 @@ class TicketView:
             for item in self.table.get_children():
                 self.table.delete(item)
 
+
+
             # پر کردن جدول با نتایج
             for ticket in result:
                 self.table.insert("", "end", values=(
-                    self.t_id,
-                    self.ticket_code,
-                    self.source,
-                    self.destination,
-                    self.airline,
-                    self.start_date,
-                    self.end_date,
-                    self.price,
-                    self.seat_no,
-                    self.sold
+                    ticket.t_id,
+                    ticket.ticket_code,
+                    ticket.source,
+                    ticket.destination,
+                    ticket.airline,
+                    ticket.start_date,
+                    ticket.end_date,
+                    ticket.price,
+                    ticket.seat_no,
+                    ticket.sold
                 ))
 
             if not result:
