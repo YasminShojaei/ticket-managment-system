@@ -57,9 +57,10 @@ def sold_validator(sold):
 
 
 
-class Validation:
-    def person_validator(self, person):
-        pass
+import re
 
+class Validation:
+    def user_validator(self, user):
+        pass
     def ticket_validator(self, ticket):
         pass

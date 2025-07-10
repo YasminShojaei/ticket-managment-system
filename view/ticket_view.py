@@ -35,7 +35,7 @@ class TicketView:
 
             result = ticket_controller.save(ticket)
             msg.showinfo("Result", result)
-            self.load_table_data()  # جدول رو به‌روز کن
+            self.load_table_data()
 
         except Exception as e:
             msg.showerror("Error", str(e))

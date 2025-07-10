@@ -1,4 +1,4 @@
-class PersonDa:
+class UserDa:
     def save(self, person):
         print("Ticket saved to db", person.id, person.name, person.family)
     def edit(self, person):
