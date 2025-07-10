@@ -37,3 +37,6 @@ class TicketController:
             return "Ticket removed successfully"
         except Exception as e:
             return f"An error occurred: {e}"
+
+    def search_by_city(self, city):
+        return self.ticket_bl.search_by_city(city)

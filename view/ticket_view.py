@@ -4,6 +4,8 @@ from controller.ticket_controller import TicketController
 from view import *
 
 ticket_controller = TicketController()
+
+
 class TicketView:
 
     # ## btn_function:
@@ -19,8 +21,17 @@ class TicketView:
                 start_date=self.start_date.get(),
                 end_date=self.end_date.get(),
                 price=self.price.get(),
-                seat_no=self.seat_no.get()
+                seat_no=self.seat_no.get(),
+                sold=self.sold.get()
             )
+
+            # sold_tag:
+            if self.sold.get():
+                tag = "Ticket sold"
+            elif not self.sold.get():
+                tag = "Ticket not sold"
+            else:
+                msg.showinfo("Info", "somthing went wrong!!!")
 
             result = ticket_controller.save(ticket)
             msg.showinfo("Result", result)
@@ -40,7 +51,8 @@ class TicketView:
                 start_date=self.start_date.get(),
                 end_date=self.end_date.get(),
                 price=self.price.get(),
-                seat_no=self.seat_no.get()
+                seat_no=self.seat_no.get(),
+                sold=self.sold.get()
             )
 
             result = ticket_controller.edit(ticket)
@@ -76,8 +88,8 @@ class TicketView:
         except Exception as e:
             msg.showerror("Error", str(e))
 
-        # except Exception as e:
-        #     msg.showerror("Error", str(e))
+        except Exception as e:
+            msg.showerror("Error", str(e))
 
     # # Clear_btn
     def reset_ticket(self):
@@ -93,11 +105,43 @@ class TicketView:
         self.end_time_h.set("")
         self.end_time_m.set("")
         self.price.set(0)
-        self.seat_no.set(1)
+        self.seat_no.set("123")
+        self.sold.set(True)
 
     # search_btn
     def search_ticket(self):
-        pass
+        try:
+            city_name = self.search_city.get()
+            if not city_name:
+                msg.showerror("Error", "Please select a city to search")
+                return
+
+            result = ticket_controller.search_by_city(city_name)
+
+            # پاک کردن جدول
+            for item in self.table.get_children():
+                self.table.delete(item)
+
+            # پر کردن جدول با نتایج
+            for ticket in result:
+                self.table.insert("", "end", values=(
+                    self.t_id,
+                    self.ticket_code,
+                    self.source,
+                    self.destination,
+                    self.airline,
+                    self.start_date,
+                    self.end_date,
+                    self.price,
+                    self.seat_no,
+                    self.sold
+                ))
+
+            if not result:
+                msg.showinfo("Result", "No tickets found for this city.")
+
+        except Exception as e:
+            msg.showerror("Error", str(e))
 
     def load_table_data(self):
         # جدول رو پاک کن
@@ -118,7 +162,8 @@ class TicketView:
                 ticket.start_date,
                 ticket.end_date,
                 ticket.price,
-                ticket.seat_no
+                ticket.seat_no,
+                ticket.sold
             ))
 
     def table_select(self, event):
@@ -135,13 +180,13 @@ class TicketView:
                 self.end_time_h.set(selected_ticket.end_date)
                 self.price.set(selected_ticket.price)
                 self.seat_no.set(selected_ticket.seat_no)
+                self.sold.set(selected_ticket.sold)
 
     def __init__(self):
         window = Tk()
         window.title("Ticket Info")
-        window.geometry("1160x500")
+        window.geometry("1260x500")
         window.config(cursor="hand2", background="light blue")
-
 
         ## Entries:
 
@@ -173,7 +218,7 @@ class TicketView:
         # start_date_time
         Label(window, text="start_date_time:", background="light blue").place(x=20, y=180)
         # day
-        self.start_date = StringVar(value="")
+        self.start_date = StringVar()
         Entry(window, textvariable=self.start_date, width=8).place(x=110, y=180)
         # start_time
         # hour
@@ -188,7 +233,7 @@ class TicketView:
         # end_date_time
         Label(window, text="end_date_time:", background="light blue").place(x=20, y=210)
         # day
-        self.end_date = StringVar(value="")
+        self.end_date = StringVar()
         Entry(window, textvariable=self.end_date, width=8).place(x=110, y=210)
         # end_time
         # hour
@@ -208,7 +253,7 @@ class TicketView:
 
         # seat_number
         Label(window, text="seat no.:", background="light blue").place(x=20, y=280)
-        self.seat_no = IntVar(value=1)
+        self.seat_no = StringVar(value="123")
         Entry(window, textvariable=self.seat_no, width=7).place(x=100, y=280)
         # # A-F
         # seat_al = StringVar(value="A")
@@ -226,8 +271,12 @@ class TicketView:
         self.search_date = StringVar(value="--")
         ttk.Combobox(window, textvariable=self.search_date, width=17).place(x=370, y=360)
 
+        # sold_checkbox:
+        self.sold = BooleanVar()
+        Checkbutton(window, text="Sold", variable=self.sold, background="light blue").place(x=159, y=280)
+
         ## Table:
-        self.table = ttk.Treeview(window, columns=[1, 2, 3, 4, 5, 6, 7, 8, 9], show="headings", height=15)
+        self.table = ttk.Treeview(window, columns=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], show="headings", height=15)
 
         # table_heading
         self.table.heading(1, text="ID")
@@ -239,6 +288,7 @@ class TicketView:
         self.table.heading(7, text="End Time")
         self.table.heading(8, text="Price")
         self.table.heading(9, text="Seat No")
+        self.table.heading(10, text="Sold Status")
 
         # table_column
         self.table.column(1, width=60, anchor="center")
@@ -250,6 +300,11 @@ class TicketView:
         self.table.column(7, width=100, anchor="center")
         self.table.column(8, width=100, anchor="center")
         self.table.column(9, width=100, anchor="center")
+        self.table.column(10, width=100, anchor="center")
+
+        # table_tags
+        self.table.tag_configure("Ticket sold", background="light green")
+        self.table.tag_configure("Ticket not sold", background="black")
 
         self.table.bind("<<TreeviewSelect>>", self.table_select)
 

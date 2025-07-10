@@ -16,4 +16,5 @@ class TicketBl:
     def remove(self, t_id):
         self.manager.remove(t_id)
 
-
+    def search_by_city(self, city):
+        return self.manager.search_by_city(city)
