@@ -1,10 +1,9 @@
 from model.tools.validation import *
 
 
-
 class Ticket:
     def __init__(self, t_id, ticket_code, source, destination, airline, start_date, end_date,
-                 price, seat_no):
+                 price, seat_no, sold):
         self.t_id = t_id
         self.ticket_code = ticket_code
         self.source = source
@@ -14,15 +13,16 @@ class Ticket:
         self.end_date = end_date
         self.price = price
         self.seat_no = seat_no
+        self.sold = sold
 
     def __repr__(self):
         return (self.t_id, self.ticket_code, self.source, self.destination, self.airline, self.start_date,
-                self.end_date, self.price,self.seat_no)
+                self.end_date, self.price, self.seat_no, self.sold)
 
     def to_tuple(self):
         return (
             self.t_id, self.ticket_code, self.source, self.destination, self.airline, self.start_date, self.end_date,
-            self.price, self.seat_no)
+            self.price, self.seat_no,self.sold)
 
     def validate(self):
         validator = Validation()
@@ -108,3 +108,12 @@ class Ticket:
     def seat_no(self, value):
         seat_no_validator(value)
         self._seat_no = value
+
+    @property
+    def sold(self):
+        return self._sold
+
+    @sold.setter
+    def sold(self, value):
+        sold_validator(value)
+        self._sold = value

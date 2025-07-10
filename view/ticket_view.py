@@ -4,6 +4,8 @@ from controller.ticket_controller import TicketController
 from view import *
 
 ticket_controller = TicketController()
+
+
 class TicketView:
 
     # ## btn_function:
@@ -93,7 +95,7 @@ class TicketView:
         self.end_time_h.set("")
         self.end_time_m.set("")
         self.price.set(0)
-        self.seat_no.set(1)
+        self.seat_no.set("1")
 
     # search_btn
     def search_ticket(self):
@@ -142,7 +144,6 @@ class TicketView:
         window.geometry("1160x500")
         window.config(cursor="hand2", background="light blue")
 
-
         ## Entries:
 
         # id
@@ -173,7 +174,7 @@ class TicketView:
         # start_date_time
         Label(window, text="start_date_time:", background="light blue").place(x=20, y=180)
         # day
-        self.start_date = StringVar(value="")
+        self.start_date = StringVar()
         Entry(window, textvariable=self.start_date, width=8).place(x=110, y=180)
         # start_time
         # hour
@@ -188,7 +189,7 @@ class TicketView:
         # end_date_time
         Label(window, text="end_date_time:", background="light blue").place(x=20, y=210)
         # day
-        self.end_date = StringVar(value="")
+        self.end_date = StringVar()
         Entry(window, textvariable=self.end_date, width=8).place(x=110, y=210)
         # end_time
         # hour
@@ -208,7 +209,7 @@ class TicketView:
 
         # seat_number
         Label(window, text="seat no.:", background="light blue").place(x=20, y=280)
-        self.seat_no = IntVar(value=1)
+        self.seat_no = StringVar(value="1")
         Entry(window, textvariable=self.seat_no, width=7).place(x=100, y=280)
         # # A-F
         # seat_al = StringVar(value="A")
@@ -225,6 +226,10 @@ class TicketView:
         Label(window, text="date_time:", background="light blue").place(x=300, y=360)
         self.search_date = StringVar(value="--")
         ttk.Combobox(window, textvariable=self.search_date, width=17).place(x=370, y=360)
+
+        # sold_checkbox:
+        sold=BooleanVar()
+        Checkbutton(window, text="Sold",variable=sold, background="light blue").place(x=159, y=280)
 
         ## Table:
         self.table = ttk.Treeview(window, columns=[1, 2, 3, 4, 5, 6, 7, 8, 9], show="headings", height=15)
