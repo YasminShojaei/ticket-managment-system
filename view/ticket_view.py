@@ -12,6 +12,7 @@ class TicketView:
     # # save_btn
     def save_ticket(self):
 
+
         try:
             ticket = Ticket(
                 t_id=self.t_id.get(),
