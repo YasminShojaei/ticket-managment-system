@@ -27,7 +27,7 @@ def start_date_validator(start_date):
             raise ValueError("Invalid start date")
         return True
     except Exception as e:
-        print(f"{e} خطا دارد ")
+        print(f"{e}تاریخ خطا دارد ")
 
 
 def end_date_validator(end_date):
@@ -40,7 +40,7 @@ def end_date_validator(end_date):
             raise ValueError("Invalid end date")
         return True
     except Exception as e:
-        print(f"{e} خطا دارد ")
+        print(f"{e} تاریخ خطا دارد ")
 
 
 def price_validator(price):
@@ -49,7 +49,7 @@ def price_validator(price):
 
 
 def seat_no_validator(seat_no):
-    if not (re.match(r"^\d{3}$", seat_no, re.I) and (1 < int(seat_no) < 232)):
+    if not  (1 < int(seat_no) < 232):
         raise ValueError("Invalid Seat No")
 
 def sold_validator(sold):

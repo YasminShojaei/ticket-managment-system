@@ -42,3 +42,8 @@ class TicketManager:
             raise Exception("Ticket not found")
 
         self.write_all(new_data)
+
+    def search_by_city(self, city):
+        data = self.read_all()
+        result = list(filter(lambda t: t.source == city or t.destination == city, data))
+        return result

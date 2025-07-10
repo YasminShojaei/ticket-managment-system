@@ -1,6 +1,4 @@
-from tkinter import *
-import tkinter.ttk as ttk
-import tkinter.messagebox as msg
+from view import *
 
 def reset_form():
     id.set(id.get() + 1)
