@@ -32,6 +32,8 @@ def table_select(x):
     birth_date.set(selected_user[2])
     user_name.set(selected_user[3])
     password.set(selected_user[4])
+    is_locked.set(selected_user[5])
+    role.set(selected_user[6])
 
 window = Tk()
 window.title("User View")
